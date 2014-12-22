@@ -3,4 +3,4 @@ $SPARK_HOME/bin/spark-submit \
   --master local[*] \
   --executor-memory 8G \
   --driver-memory 8G \
-  target/spark-hash-*.jar ${*:2}
+  target/spark-hash-*.jar $@
