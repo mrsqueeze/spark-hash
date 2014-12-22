@@ -11,6 +11,7 @@ spark-hash can be built using maven
 
 	> mvn clean package
 	
+**Note: to use the scripts included in this release, make sure $SPARK_HOME is set**
 
 
 Example Data
