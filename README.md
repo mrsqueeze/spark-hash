@@ -150,7 +150,7 @@ Executing a driver in local mode. This executes com.invincea.sparki.hash.OpenPor
 	bash$ ./run_local.sh
 	Usage: OpenPortApp <file> <partitions> <data_sample>
 	
-	bash$ ./run_local.sh data/open_ports_count.dat 8 0.5
+	bash$ ./run_local.sh data/sample.dat 8 0.5
 	
 ### Spark REPL
 
@@ -202,7 +202,7 @@ Executing a driver in local mode. This executes com.invincea.sparki.hash.OpenPor
 	import java.io._
 	import com.invincea.spark.hash.{LSH, LSHModel}
 
-	val port_set : org.apache.spark.rdd.RDD[(List[Int], Int)] = sc.objectFile("open_ports_count.dat").repartition(320)
+	val port_set : org.apache.spark.rdd.RDD[(List[Int], Int)] = sc.objectFile("sample.dat").repartition(320)
 	val port_set_filtered = port_set.filter(tpl => tpl._1.size >= 3)
 	val points = port_set.zipWithIndex().map(x => x.swap)
 	val vctr = port_set.map(r => (r._1.map(i => (i, 1.0)))).map(a => Vectors.sparse(65535, a).asInstanceOf[SparseVector])
