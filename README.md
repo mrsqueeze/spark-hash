@@ -4,6 +4,15 @@ spark-hash
 Locality sensitive hashing for [Apache Spark](http://spark.apache.org/).
 This implementation was largely based on the algorithm described in chapter 3 of [Mining of Massive Datasets](http://mmds.org/) with some modifications for use in spark.
 
+Maven Central Repository
+--------------
+spark-hash is making it's way to maven central. Release 0.1.0 has been pushed to sonatype. Once approved it will be accessible at:
+
+	<dependency>
+       <groupId>com.invincea</groupId>
+       <artifactId>spark-hash</artifactId>
+       <version>0.1.0</version>
+    </dependency>
 
 Building
 --------------
