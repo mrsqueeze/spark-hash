@@ -5,7 +5,31 @@
   <groupId>com.invincea</groupId>
   <name>spark-hash</name>
   <description>scalable set hashing algorithms</description>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
+  <url>https://github.com/mrsqueeze/spark-hash</url>
+  <licenses>
+    <license>
+      <name>Apache 2.0 License</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:git:git@github.com:mrsqueeze/spark-hash.git</connection>
+    <developerConnection>scm:git:https://github.com/mrsqueeze/spark-hash.git</developerConnection>
+    <url>scm:git:git@github.com:mrsqueeze/spark-hash.gitt</url>
+    <tag>HEAD</tag>
+  </scm>
+  <developers>
+    <developer>
+      <id>mrsqueeze</id>
+      <name>Michael Orr</name>
+      <email>michael.d.orr@gmail.com</email>
+      <url>www.linkedin.com/pub/michael-orr/30/b33/7a9</url>
+      <organization>Invincea, Inc.</organization>
+      <organizationUrl>http://www.invincea.com</organizationUrl>
+    </developer>
+  </developers>
   <properties>
     <scala.version>2.10.4</scala.version>
     <scala.binary.version>2.10</scala.binary.version>
