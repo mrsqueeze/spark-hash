@@ -6,7 +6,7 @@ This implementation was largely based on the algorithm described in chapter 3 of
 
 Maven Central Repository
 --------------
-spark-hash is making it's way to maven central. Release 0.1.0 has been pushed to sonatype. Once approved it will be accessible at:
+spark-hash is on maven central and is accessible at:
 
 	<dependency>
        <groupId>com.invincea</groupId>
