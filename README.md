@@ -11,7 +11,7 @@ spark-hash is on maven central and is accessible at:
 	<dependency>
        <groupId>com.invincea</groupId>
        <artifactId>spark-hash</artifactId>
-       <version>0.1.0</version>
+       <version>0.1.2</version>
     </dependency>
 
 Building
