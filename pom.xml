@@ -5,7 +5,7 @@
   <groupId>com.invincea</groupId>
   <name>spark-hash</name>
   <description>scalable set hashing algorithms</description>
-  <version>0.1.2</version>
+  <version>0.1.3</version>
   <url>https://github.com/mrsqueeze/spark-hash</url>
   <licenses>
     <license>
@@ -34,6 +34,7 @@
     <scala.version>2.10.4</scala.version>
     <scala.binary.version>2.10</scala.binary.version>
     <java.version>1.7</java.version>
+    <spark.version>1.4.1</spark.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <mavenConflictResolvers>newest,nearest</mavenConflictResolvers>
@@ -52,17 +53,17 @@
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-core_${scala.binary.version}</artifactId>
-      <version>1.2.0</version>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-sql_${scala.binary.version}</artifactId>
-      <version>1.2.0</version>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-mllib_${scala.binary.version}</artifactId>
-      <version>1.2.0</version>
+      <version>1.4.1</version>
     </dependency>
     <dependency>
       <groupId>org.scalatest</groupId>
