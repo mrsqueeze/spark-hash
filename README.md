@@ -149,6 +149,8 @@ The previously described data can easily be converted into Spark's SparseVector 
 
 - *minClusterSize* - a post processing filter function that excludes clusters below a threshold.
 
+- *repeatedItems* - optional boolean value to indicate whether there are repeated items in each set and you want to use [multisets](https://en.wikipedia.org/wiki/Multiset) for computing Jaccard similarity. Defaults to false. Note that, when using bag semantics/multisets, the maximum possible similarity value for any two sets is 0.5 rather than 1. See [Mining of Massive Datasets](http://mmds.org/) chapter 3 pgs. 76-77 for more details.
+
 There are two ways to execute LSH. The first being a driver class that is submitted to a spark cluster (can be a single machine running in local mode). The second is using spark's REPL. The later is useful for parameter tuning. 
 
 
