@@ -6,7 +6,7 @@ import scala.collection.mutable.ListBuffer
 import org.apache.spark.SparkContext._
 
 
-class LSHModel(p : Int, m : Int, numRows : Int) extends Serializable {
+class LSHModel(p : Int, m : Int, numRows : Int, repeatedItems : Boolean = false) extends Serializable {
   
   /** generate rows hash functions */
   private val _hashFunctions = ListBuffer[Hasher]()
@@ -31,6 +31,9 @@ class LSHModel(p : Int, m : Int, numRows : Int) extends Serializable {
  
   /** jaccard cluster scores */
   var scores : RDD[(Long, Double)] = null
+
+  /** whether each vector has repeated items */
+  var hasRepeatedItems : Boolean = repeatedItems
   
   /** filter out scores below threshold. this is an optional step.*/
   def filter(score : Double) : LSHModel = {

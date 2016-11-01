@@ -5,13 +5,14 @@ import org.apache.spark.rdd.RDD
 import scala.collection.mutable.ListBuffer
 import org.apache.spark.SparkContext._
 
-class LSH(data : RDD[SparseVector], p : Int, m : Int, numRows : Int, numBands : Int, minClusterSize : Int) extends Serializable {
+class LSH(data : RDD[SparseVector], p : Int, m : Int, numRows : Int, numBands : Int, minClusterSize : Int, repeatedItems : Boolean = false)
+  extends Serializable {
   
   /** run LSH using the constructor parameters */
   def run() : LSHModel = {
     
     //create a new model object
-    val model = new LSHModel(p, m, numRows)
+    val model = new LSHModel(p, m, numRows, repeatedItems)
 
     //preserve vector index
     val zdata = data.zipWithIndex().cache()
@@ -38,14 +39,16 @@ class LSH(data : RDD[SparseVector], p : Int, m : Int, numRows : Int, numBands : 
     model.clusters = zdata.map(x => x.swap).join(model.vector_cluster).map(x => (x._2._2, x._2._1)).groupByKey().cache()
     
     //compute the jaccard similarity of each cluster
-    model.scores = model.clusters.map(row => (row._1, jaccard(row._2.toList))).cache()
+    model.scores = model.clusters
+      .map(row => (row._1, if (model.hasRepeatedItems) jaccardBag(row._2.toList) else jaccard(row._2.toList))).cache()
     
     model
   }
   
   /** compute a single vector against an existing model */
   def compute(data : SparseVector, model : LSHModel, minScore : Double) : RDD[(Long, Iterable[SparseVector])] = {
-     model.clusters.map(x => (x._1, x._2++List(data))).filter(x => jaccard(x._2.toList) >= minScore)
+     model.clusters.map(x => (x._1, x._2++List(data)))
+       .filter(x => (if (model.hasRepeatedItems) jaccardBag(x._2.toList) else jaccard(x._2.toList)) >= minScore)
   }
   
   /** compute jaccard between two vectors */
@@ -59,6 +62,28 @@ class LSH(data : RDD[SparseVector], p : Int, m : Int, numRows : Int, numBands : 
   def jaccard(l : List[SparseVector]) : Double = {
     l.foldLeft(l(0).indices.toList)((a1, b1) => a1.intersect(b1.indices.toList.asInstanceOf[List[Nothing]])).size / 
     l.foldLeft(List())((a1, b1) => a1.union(b1.indices.toList.asInstanceOf[List[Nothing]])).distinct.size.doubleValue
-  }  
-  
+  }
+
+  /** compute jaccard similarity between two vectors using bag/multiset semantics,
+    *  where the indices represent items and the values represent the
+    *  number of times each item is repeated in the set */
+  def jaccardBag(a : SparseVector, b : SparseVector) : Double = {
+    val a1 = getItems(a)
+    val b1 = getItems(b)
+    a1.intersect(b1).size / a1.union(b1).size.doubleValue
+  }
+
+  /** compute jaccard similarity over a list of vectors using bag/multiset semantics */
+  def jaccardBag(l : List[SparseVector]) : Double = {
+    l.foldLeft(getItems(l(0)))((a1, b1) => a1.intersect(getItems(b1).asInstanceOf[List[Nothing]])).size /
+    l.foldLeft(List())((a1, b1) => a1.union(getItems(b1).asInstanceOf[List[Nothing]])).size.doubleValue
+  }
+
+  /** convert a SparseVector where indices represent items and
+    * values represent the times each item appears in the set
+    * to a list */
+  def getItems(xs : SparseVector) : List[Int] = {
+    xs.indices.zip(xs.values)
+      .flatMap(pair => List.fill(pair._2.toInt)(pair._1)).toList
+  }
 }
